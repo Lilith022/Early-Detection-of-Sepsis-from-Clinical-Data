@@ -19,7 +19,7 @@ OUTPUT_EXCEL_STD = OUTPUT_PSV_STD.replace('.psv', '.xlsx')
 # Cargar datos
 df = pd.read_csv(INPUT_FILE, sep='|', index_col=0)
 df.columns = df.columns.str.replace('/', '_')
-numeric_cols = df.iloc[:, 0:40].columns
+numeric_cols = df.iloc[:, 1:44].columns
 
 # Prefilling con SoftImpute
 print("\nAplicando SoftImpute...")
@@ -78,3 +78,4 @@ df_standardized.to_excel(OUTPUT_EXCEL_STD, index=True)
 print("\nResumen de modelos ajustados por columna:")
 
 print("\n¡Proceso completado con SoftImpute + XGBoost optimizado!")
+
