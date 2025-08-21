@@ -99,17 +99,22 @@ print(f"Valores faltantes restantes: {missing_values}")
 df_imputed.to_csv(OUTPUT_PSV, sep='|', index=True)
 df_imputed.to_excel(OUTPUT_EXCEL, index=True)
 
-# Estandarizar
-
-scaler = StandardScaler()
+# Estandarizar resultados imputados
 df_standardized = df_imputed.copy()
-df_standardized[numeric_cols] = scaler.fit_transform(df_imputed[numeric_cols])
-df_standardized.to_csv(OUTPUT_PSV_STD, sep='|', index=True)
-df_standardized.to_excel(OUTPUT_EXCEL_STD, index=True)
 
+# Excluir columnas que no quieres escalar
+cols_excluir = ['SepsisLabel', 'Patient']
+
+# Seleccionar todas las columnas numéricas excepto las excluidas
+cols_escalar = [col for col in final_df.columns if col not in cols_excluir]
+
+# Estandarizar esas columnas
+scaler = StandardScaler()
+df_standardized[cols_escalar] = scaler.fit_transform(final_df[cols_escalar])
 
 print("\nProceso completado exitosamente")
 print(f"- Sin estandarizar: {OUTPUT_PSV} y {OUTPUT_EXCEL}")
 print(f"- Estandarizado: {OUTPUT_PSV_STD} y {OUTPUT_EXCEL_STD}")
+
 
 
