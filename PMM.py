@@ -30,7 +30,7 @@ OUTPUT_EXCEL_STD = OUTPUT_PSV_STD.replace('.psv', '.xlsx')
 # Cargar datos
 df = pd.read_csv(INPUT_FILE, sep='|', index_col=0)
 df.columns = df.columns.str.replace('/', '_')
-numeric_cols = df.iloc[:, 0:58].columns
+numeric_cols = df.iloc[:, 0:40].columns
 cols_with_missing = [col for col in numeric_cols if df[col].isna().any()]
 
 # Configurar modelos base
@@ -111,3 +111,4 @@ df_standardized.to_excel(OUTPUT_EXCEL_STD, index=True)
 print("\nProceso completado exitosamente")
 print(f"- Sin estandarizar: {OUTPUT_PSV} y {OUTPUT_EXCEL}")
 print(f"- Estandarizado: {OUTPUT_PSV_STD} y {OUTPUT_EXCEL_STD}")
+
