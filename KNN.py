@@ -18,7 +18,7 @@ OUTPUT_EXCEL_STD = OUTPUT_PSV_STD.replace('.psv', '.xlsx')
 # Cargar y procesar datos
 df = pd.read_csv(INPUT_FILE, sep='|', index_col=0) #columnas-1col:Paciente
 df.columns = df.columns.str.replace('/', '_') # Reemplazar '/' por '_' para las variables añadidas: por la variable añadida
-numeric_cols = df.iloc[:, 0:58].columns  
+numeric_cols = df.iloc[:, 0:40].columns  
 
 # Imputación KNN
 print("\nIniciando imputación KNN...")
@@ -46,5 +46,6 @@ df_standardized[numeric_cols] = scaler.fit_transform(imputed_df[numeric_cols]) #
 # Guardar resultados estandarizados
 df_standardized.to_csv(OUTPUT_PSV_STD, sep='|', index=True)
 df_standardized.to_excel(OUTPUT_EXCEL_STD, index=True)
+
 
 print("Proceso completado exitosamente")
