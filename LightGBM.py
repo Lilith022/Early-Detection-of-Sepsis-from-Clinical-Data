@@ -25,7 +25,7 @@ MODEL_SAVE_PATH = 'D:/Desktop/Tesis/Data/Imputaciones/LightGBM_iterative_imputer
 # Cargar y procesar datos
 df = pd.read_csv(INPUT_FILE, sep='|', index_col=0)
 df.columns = df.columns.str.replace('/', '_')
-numeric_cols = df.iloc[:, 0:40].columns
+numeric_cols = df.iloc[:, 1:44].columns
 
 # Función para evaluar la imputación
 def imputation_scorer(estimator, X, y=None):
@@ -128,3 +128,4 @@ df_standardized.to_excel(OUTPUT_EXCEL_STD, index=True)
 
 
 print("\nProceso completado exitosamente!")
+
