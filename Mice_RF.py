@@ -77,11 +77,18 @@ final_df.to_excel(OUTPUT_EXCEL, index=False)
 
 # =======================
 # 5. Estandarización Z-score
-# =======================
-print("\nAplicando estandarización Z-score...")
-scaler = StandardScaler()
+# Estandarizar resultados imputados
 df_standardized = final_df.copy()
-df_standardized[numeric_cols] = scaler.fit_transform(final_df[numeric_cols])
+
+# Excluir columnas que no quieres escalar
+cols_excluir = ['SepsisLabel', 'Patient']
+
+# Seleccionar todas las columnas numéricas excepto las excluidas
+cols_escalar = [col for col in final_df.columns if col not in cols_excluir]
+
+# Estandarizar esas columnas
+scaler = StandardScaler()
+df_standardized[cols_escalar] = scaler.fit_transform(final_df[cols_escalar])
 
 df_standardized.to_csv(OUTPUT_PSV_STD, sep='|', index=False)
 df_standardized.to_excel(OUTPUT_EXCEL_STD, index=False)
@@ -91,4 +98,5 @@ df_standardized.to_excel(OUTPUT_EXCEL_STD, index=False)
 # =======================
 print("\nProceso completado exitosamente!")
 print(f"Total de valores imputados: {mask_nan.sum().sum()}")
+
 
