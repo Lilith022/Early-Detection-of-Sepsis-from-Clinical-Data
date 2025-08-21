@@ -35,7 +35,7 @@ Z = 1.96  # Para intervalo de confianza del 95%
 
 print("Cargando datos imputados...")
 df = pd.read_csv(INPUT_FILE, sep='|')
-numeric_cols = df.iloc[:, 1:36].columns 
+numeric_cols = df.iloc[:, 1:44].columns 
 imputed_df = df.copy() 
 # Estandarizar resultados imputados
 scaler = StandardScaler() # Z-Score standardization
@@ -202,3 +202,4 @@ plt.show()
 print("\nResumen de resultados (ordenado por AUC-ROC):")
 resultados_df = pd.DataFrame(resultados_metricas)
 print(resultados_df.sort_values(by="AUC_ROC", ascending=False))
+
