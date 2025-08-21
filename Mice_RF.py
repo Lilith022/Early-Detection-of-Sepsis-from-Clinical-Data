@@ -29,7 +29,7 @@ OUTPUT_EXCEL_STD = OUTPUT_PSV_STD.replace('.psv', '.xlsx')
 # Cargar y procesar datos
 df = pd.read_csv(INPUT_FILE, sep='|', index_col=0)
 df.columns = df.columns.str.replace('/', '_')  # Reemplazar '/' por '_' en nombres de columnas
-numeric_cols = df.iloc[:, 0:40].columns  # Selección de columnas numéricas
+numeric_cols = df.iloc[:, 1:44].columns  # Selección de columnas numéricas
 
 # Configurar el imputador con RandomForest como estimador base
 print("\nConfigurando imputador con RandomForest...")
@@ -111,4 +111,5 @@ df_standardized.to_csv(OUTPUT_PSV_STD, sep='|', index=True)
 df_standardized.to_excel(OUTPUT_EXCEL_STD, index=True)
 
 print("Proceso completado exitosamente")
+
 
