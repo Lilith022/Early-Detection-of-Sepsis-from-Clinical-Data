@@ -1,115 +1,94 @@
 import pandas as pd
 import numpy as np
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.experimental import enable_iterative_imputer
-from sklearn.impute import IterativeImputer
-from sklearn.preprocessing import StandardScaler
+import miceforest as mf
 import time
+from sklearn.preprocessing import StandardScaler
 import warnings
 warnings.filterwarnings('ignore')
 
-# Configuración
+# =======================
+# CONFIGURACIÓN
+# =======================
 RANDOM_STATE = 42
-MAX_ITER = 15
-N_ESTIMATORS = 500
-RF_MAX_DEPTH = 10
-RF_MAX_FEATURES = 0.6  # Proporción de características a considerar
-RF_MIN_SAMPLES_LEAF = 5  # Mínimo de muestras por hoja
-CONVERGENCE_TOL = 0.01
-N_JOBS = -1  # Utilizar todos los núcleos disponibles de la CPU
-PATIENCE = 3  # Número de iteraciones sin mejora para detener
+N_DATASETS = 4
+N_ITERATIONS = 4
 
 # Rutas de archivos
-INPUT_FILE = 'C:/Users/Lilit/Desktop/Datos_previo_imputar.psv'
-OUTPUT_PSV = 'C:/Users/Lilit/Desktop/Mice_RF.psv'
+INPUT_FILE = 'D:/Desktop/Tesis/Data/Datos_previo_imputar/Datos_previo_imputar.psv'
+OUTPUT_PSV = 'D:/Desktop/Tesis/Data/Imputaciones/MiceForest.psv'
 OUTPUT_EXCEL = OUTPUT_PSV.replace('.psv', '.xlsx')
 OUTPUT_PSV_STD = OUTPUT_PSV.replace('.psv', '_estandarizado.psv')
 OUTPUT_EXCEL_STD = OUTPUT_PSV_STD.replace('.psv', '.xlsx')
 
-# Cargar y procesar datos
-df = pd.read_csv(INPUT_FILE, sep='|', index_col=0)
-df.columns = df.columns.str.replace('/', '_')  # Reemplazar '/' por '_' en nombres de columnas
-numeric_cols = df.iloc[:, 1:44].columns  # Selección de columnas numéricas
+# =======================
+# 1. Cargar y preparar datos
+# =======================
+df = pd.read_csv(INPUT_FILE, sep='|')
+df.columns = df.columns.str.replace('/', '', regex=False)
+df = df.reset_index(drop=True)
 
-# Configurar el imputador con RandomForest como estimador base
-print("\nConfigurando imputador con RandomForest...")
+# Columnas numéricas a imputar
+numeric_cols = df.columns[1:53].tolist()
 
-imputer = IterativeImputer(
-    estimator=RandomForestRegressor(
-        n_estimators=N_ESTIMATORS,
-        max_depth=RF_MAX_DEPTH,
-        max_features=RF_MAX_FEATURES,
-        min_samples_leaf=RF_MIN_SAMPLES_LEAF,
-        n_jobs=N_JOBS,
-        random_state=RANDOM_STATE
-    ),
-    max_iter=MAX_ITER,
-    tol=CONVERGENCE_TOL,
-    random_state=RANDOM_STATE,
-    verbose=2  # Mostrar detalles de progreso
-)
+# Conversión segura a numérico
+for col in numeric_cols:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
 
-# Función de monitoreo de convergencia
-class ConvergenceMonitor:
-    def __init__(self, patience=PATIENCE, tol=CONVERGENCE_TOL):
-        self.iter = 0
-        self.best_loss = np.inf
-        self.no_improve = 0
-        self.patience = patience
-        self.tol = tol
 
-    def __call__(self, X, y):
-        self.iter += 1
-        current_loss = np.nanmean(np.abs(X - y))  # Calcular la pérdida (error absoluto medio)
+print(df[numeric_cols].notna().sum().sort_values())
 
-        if current_loss < (self.best_loss - self.tol):
-            self.best_loss = current_loss  # Si hay mejora, actualizar la mejor pérdida
-            self.no_improve = 0
-        else:
-            self.no_improve += 1
-
-        if self.no_improve >= self.patience:  # Si no hay mejora durante "patience" iteraciones
-            print("\nDetención temprana activada debido a falta de mejora.")
-            raise StopIteration()  # Detener el proceso de imputación
-
-# Agregar el callback de convergencia al imputador
-imputer.callback = ConvergenceMonitor(patience=PATIENCE, tol=CONVERGENCE_TOL)
-
-# Imputación con IterativeImputer (MICE Random Forest)
-print("\nIniciando imputación con IterativeImputer (MICE Random Forest)...")
+# =======================
+# 2. Imputación MICE
+# =======================
+print("\nIniciando imputación MICE...")
 start_time = time.time()
 
-# Ejecutar imputación
-try:
-    imputed_values = imputer.fit_transform(df[numeric_cols])
-except StopIteration:
-    print("Convergencia alcanzada antes de completar todas las iteraciones.")
+kernel = mf.ImputationKernel(
+    data=df[numeric_cols],
+    num_datasets=N_DATASETS,
+    mean_match_candidates=2,
+    save_all_iterations_data=False,
+    random_state=RANDOM_STATE
+)
 
-print("\nTiempo de imputación:", round(time.time() - start_time, 2), "segundos")
+# Ejecutar MICE
+kernel.mice(iterations=N_ITERATIONS, verbose=True)
 
-# Verificar resultados
-missing_values = pd.isna(imputed_values).sum()
-print("Valores faltantes restantes:", missing_values.sum())
+print(f"\nTiempo de imputación: {round(time.time() - start_time, 2)} segundos")
 
-# Crear DataFrame con los valores imputados
-imputed_df = df.copy()  # Hacer una copia del DataFrame original
-imputed_df[numeric_cols] = imputed_values  # Reemplazar las columnas numéricas imputadas
+# =======================
+# 3. Promediar imputaciones solo en NaN originales
+# =======================
+print("\nProcesando resultados...")
+mask_nan = df[numeric_cols].isna()
+imputed_datasets = [kernel.complete_data(dataset=i) for i in range(N_DATASETS)]
+imputed_array = np.stack([d.values for d in imputed_datasets], axis=0)
 
-# Guardar resultados imputados
-print("\nGuardando resultados imputados...")
-imputed_df.to_csv(OUTPUT_PSV, sep='|', index=True)
-imputed_df.to_excel(OUTPUT_EXCEL, index=True)
+final_df = df.copy()
+mean_imputed = np.mean(imputed_array, axis=0)
+final_df.loc[:, numeric_cols] = np.where(mask_nan, mean_imputed, df[numeric_cols])
 
-# Estandarizar resultados imputados
+# =======================
+# 4. Guardar resultados
+# =======================
+print("\nGuardando resultados...")
+final_df.to_csv(OUTPUT_PSV, sep='|', index=False)
+final_df.to_excel(OUTPUT_EXCEL, index=False)
+
+# =======================
+# 5. Estandarización Z-score
+# =======================
 print("\nAplicando estandarización Z-score...")
 scaler = StandardScaler()
-df_standardized = imputed_df.copy()
-df_standardized[numeric_cols] = scaler.fit_transform(imputed_df[numeric_cols])
+df_standardized = final_df.copy()
+df_standardized[numeric_cols] = scaler.fit_transform(final_df[numeric_cols])
 
-# Guardar resultados estandarizados
-df_standardized.to_csv(OUTPUT_PSV_STD, sep='|', index=True)
-df_standardized.to_excel(OUTPUT_EXCEL_STD, index=True)
+df_standardized.to_csv(OUTPUT_PSV_STD, sep='|', index=False)
+df_standardized.to_excel(OUTPUT_EXCEL_STD, index=False)
 
-print("Proceso completado exitosamente")
-
+# =======================
+# 6. Resumen
+# =======================
+print("\nProceso completado exitosamente!")
+print(f"Total de valores imputados: {mask_nan.sum().sum()}")
 
