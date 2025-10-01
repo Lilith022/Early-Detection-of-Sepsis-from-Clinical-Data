@@ -1,7 +1,6 @@
-# 🧬 Early Detection of Sepsis using Machine Learning
+# 🧬 Early Detection of Sepsis from Clinical Data using a Machine Learning Model
 
-## 🎯 Objective
-Develop a robust and interpretable machine learning pipeline for **early detection of sepsis**, leveraging temporal structuring, advanced imputation, and boosting-based models (LightGBM, XGBoost, CatBoost).
+ the aim of this study is to develop a model for early sepsis detection by implementing a rigorous, clinically-grounded data preprocessing pipeline. This approach prioritizes careful patient selection, advanced handling of missing values, and temporal alignment to create an analysis-ready dataset. This foundation enables the subse quent selection of a machine learning model using a broad set of metrics, including the utility score. 
 
 ---
 
@@ -13,21 +12,21 @@ The methodology follows a **systematic and clinically-grounded pipeline**:
    - Feature engineering (vital signs, labs, demographics, derived features).  
 
 2. **Imputation**  
-   - Multivariate imputation using **LightGBM Iterative Imputer**.  
+   - Multivariate imputation using **LightGBM**.  
    - Hyperparameter tuning with **HalvingRandomSearchCV**.  
    - Z-score normalization of variables.  
 
-3. **Model Development**  
-   - Gradient Boosting family: **LightGBM, XGBoost, CatBoost**.  
+3. **Model Development**
+   -
+   - Gradient Boosting family: **LightGBM, Gradient Boosting, CatBoost, XGBoost**.  
    - Hyperparameter optimization via **Optuna**.  
-   - Threshold optimization prioritizing sensitivity and F1-score.  
+   - Threshold optimization.  
 
-4. **Evaluation**  
-   - Metrics: Accuracy, F1, Precision, Recall, ROC-AUC, Sensitivity, Specificity.  
-   - **Clinical Utility Score** (patient-level utility).  
+5. **Evaluation**  
+   - Metrics: Accuracy, F1 Score, Precision, ROC-AUC, Sensitivity, Specificity, **Utiity Score**.  
    - 5-fold Stratified Group Cross-Validation.  
 
-5. **Interpretability**  
+6. **Interpretability**  
    - **SHAP values** for feature importance (global and patient-level).  
    - Visualization of key predictors (ICULOS, BUN, respiratory patterns).  
 
