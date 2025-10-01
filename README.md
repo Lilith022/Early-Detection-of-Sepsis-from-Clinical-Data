@@ -4,7 +4,7 @@
 
 ---
 
-## 🔬 Methodology
+## Methodology
 The methodology follows a **systematic and clinically-grounded pipeline**:
 1. **Data Preprocessing**  
    - Patient-level temporal segmentation (21-hour observation windows).  
@@ -33,4 +33,16 @@ The methodology follows a **systematic and clinically-grounded pipeline**:
 ---
 
 ## 📂 Repository Structure
+
+📂 Pre-processing
+│   └── data_preprocessing.py
+│
+📂 Models
+│   └── Total_models.py
+│
+📂 Optimized_Models
+│   ├── CatBoost.py
+│   ├── Gradient_Boosting.py
+│   ├── LightGBM.py
+│   └── XGBoost.py
 
