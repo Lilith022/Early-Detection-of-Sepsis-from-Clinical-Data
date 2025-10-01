@@ -41,11 +41,12 @@ The methodology follows a **systematic and clinically-grounded pipeline**:
 ├── Models/
 │   └── Total_models.py
 │
-└── Optimized_Models/
-    ├── CatBoost.py
-    ├── Gradient_Boosting.py
-    ├── LightGBM.py
-    └── XGBoost.py
+├── Optimized_Models/
+│   ├── CatBoost.py
+│   ├── Gradient_Boosting.py
+│   ├── LightGBM.py
+│   └── XGBoost.py
+└── Requirements.txt
 ```
 ---
 
@@ -68,17 +69,17 @@ The methodology follows a **systematic and clinically-grounded pipeline**:
 To reproduce the experiments, you need:
 
 - **Python 3.9+** installed.  
-- All required libraries listed in `requirements.txt`.  
+- All required libraries listed in `Requirements.txt`.  
 
 ### 🔧 Installation
 
 Clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/your-username/sepsis-prediction.git
+git clone https://github.com/your-username/sepsis-prediction.git](https://github.com/Lilith022/Early-Detection-of-Sepsis-from-Clinical-Data.git
 cd sepsis-prediction
-pip install -r requirements.txt
-
+pip install -r Requirements.txt
+```
 
 ## Authors
 
