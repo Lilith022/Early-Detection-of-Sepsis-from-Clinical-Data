@@ -63,7 +63,7 @@ The methodology follows a **systematic and clinically-grounded pipeline**:
 - **`Gradient_Boosting.py`**: Final Gradient Boosting pipeline with cross-validation, hyperparameter tuning, SHAP, and metrics.  
 - **`LightGBM.py`**: Final LightGBM pipeline including optimization, SHAP explanations, and evaluation.  
 - **`XGBoost.py`**: Final XGBoost pipeline with patient-level utility, Optuna, SHAP, and full metrics.
-- 
+**`Requirements.txt`**: All required libraries
 ## Requirements & Reproducibility
 
 To reproduce the experiments, you need:
