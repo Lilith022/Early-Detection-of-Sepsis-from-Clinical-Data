@@ -61,7 +61,23 @@ The methodology follows a **systematic and clinically-grounded pipeline**:
 - **`CatBoost.py`**: Final CatBoost pipeline with utility metrics, Optuna optimization, SHAP interpretability, and evaluation.  
 - **`Gradient_Boosting.py`**: Final Gradient Boosting pipeline with cross-validation, hyperparameter tuning, SHAP, and metrics.  
 - **`LightGBM.py`**: Final LightGBM pipeline including optimization, SHAP explanations, and evaluation.  
-- **`XGBoost.py`**: Final XGBoost pipeline with patient-level utility, Optuna, SHAP, and full metrics.  
+- **`XGBoost.py`**: Final XGBoost pipeline with patient-level utility, Optuna, SHAP, and full metrics.
+- 
+## Requirements & Reproducibility
+
+To reproduce the experiments, you need:
+
+- **Python 3.9+** installed.  
+- All required libraries listed in `requirements.txt`.  
+
+### 🔧 Installation
+
+Clone the repository and install the dependencies:
+
+```bash
+git clone https://github.com/your-username/sepsis-prediction.git
+cd sepsis-prediction
+pip install -r requirements.txt
 
 
 ## Authors
