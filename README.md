@@ -34,15 +34,26 @@ The methodology follows a **systematic and clinically-grounded pipeline**:
 
 ## 📂 Repository Structure
 
-📂 Pre-processing
+📂 Pre-processing/
 │   └── data_preprocessing.py
 │
-📂 Models
+📂 Models/
 │   └── Total_models.py
 │
-📂 Optimized_Models
+📂 Optimized_Models/
 │   ├── CatBoost.py
 │   ├── Gradient_Boosting.py
 │   ├── LightGBM.py
 │   └── XGBoost.py
+
+
+## Authors
+
+- Josman Rico
+- Deisy Torres
+- Camilo Santos
+- Harold H. Rodríguez
+- Carlos A. Fajardo
+
+Department of Electrical, Electronics and Telecommunications Universidad Industrial de Santander – Bucaramanga, Colombia
 
