@@ -34,13 +34,15 @@ The methodology follows a **systematic and clinically-grounded pipeline**:
 
 ## 📂 Repository Structure
 
-📂 Pre-processing/
+
+```bash
+├── Pre-processing/
 │   └── data_preprocessing.py
 │
-📂 Models/
+├── Models/
 │   └── Total_models.py
 │
-📂 Optimized_Models/
+├── Optimized_Models/
 │   ├── CatBoost.py
 │   ├── Gradient_Boosting.py
 │   ├── LightGBM.py
