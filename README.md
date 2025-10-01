@@ -1,6 +1,6 @@
 # Early Detection of Sepsis from Clinical Data using a Machine Learning Model
 
-The aim of this study is to develop a model for early sepsis detection by implementing a rigorous, clinically-grounded data preprocessing pipeline. This approach prioritizes careful patient selection, advanced handling of missing values, and temporal alignment to create an analysis-ready dataset. This foundation enables the subse quent selection of a machine learning model using a broad set of metrics, including the utility score. 
+The aim of this study is to develop a model for early sepsis detection by implementing a rigorous, clinically-grounded data preprocessing pipeline. This approach prioritizes careful patient selection, advanced handling of missing values, and temporal alignment to create an analysis-ready dataset. This foundation enables the subsequent selection of a machine learning model using a broad set of metrics, including the Utility Score. 
 
 ---
 
@@ -90,5 +90,5 @@ pip install -r Requirements.txt
 - Harold H. Rodríguez
 - Carlos A. Fajardo
 
-Department of Electrical, Electronics and Telecommunications Universidad Industrial de Santander – Bucaramanga, Colombia
+Department of Electrical, Electronics and Telecommunications – Universidad Industrial de Santander – Bucaramanga, Colombia
 
