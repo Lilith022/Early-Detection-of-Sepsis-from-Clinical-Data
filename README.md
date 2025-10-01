@@ -1,4 +1,4 @@
-# 🧬 Early Detection of Sepsis from Clinical Data using a Machine Learning Model
+# Early Detection of Sepsis from Clinical Data using a Machine Learning Model
 
  the aim of this study is to develop a model for early sepsis detection by implementing a rigorous, clinically-grounded data preprocessing pipeline. This approach prioritizes careful patient selection, advanced handling of missing values, and temporal alignment to create an analysis-ready dataset. This foundation enables the subse quent selection of a machine learning model using a broad set of metrics, including the utility score. 
 
@@ -47,6 +47,20 @@ The methodology follows a **systematic and clinically-grounded pipeline**:
 │   ├── Gradient_Boosting.py
 │   ├── LightGBM.py
 │   └── XGBoost.py
+
+## Files and Directories
+
+### Pre-processing
+- **`data_preprocessing.py`**: Full preprocessing pipeline (forward-fill imputation, 21h temporal alignment, clinical feature engineering, 6h sliding windows, and variable filtering).  
+
+### Models
+- **`Total_models.py`**: Comparative analysis of 11 ML models with cross-validation, multiple metrics, and statistical confidence intervals.  
+
+### Optimized_Models
+- **`CatBoost.py`**: Final CatBoost pipeline with utility metrics, Optuna optimization, SHAP interpretability, and evaluation.  
+- **`Gradient_Boosting.py`**: Final Gradient Boosting pipeline with cross-validation, hyperparameter tuning, SHAP, and metrics.  
+- **`LightGBM.py`**: Final LightGBM pipeline including optimization, SHAP explanations, and evaluation.  
+- **`XGBoost.py`**: Final XGBoost pipeline with patient-level utility, Optuna, SHAP, and full metrics.  
 
 
 ## Authors
