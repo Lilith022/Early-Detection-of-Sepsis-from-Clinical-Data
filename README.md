@@ -1,6 +1,6 @@
 # Early Detection of Sepsis from Clinical Data using a Machine Learning Model
 
- the aim of this study is to develop a model for early sepsis detection by implementing a rigorous, clinically-grounded data preprocessing pipeline. This approach prioritizes careful patient selection, advanced handling of missing values, and temporal alignment to create an analysis-ready dataset. This foundation enables the subse quent selection of a machine learning model using a broad set of metrics, including the utility score. 
+The aim of this study is to develop a model for early sepsis detection by implementing a rigorous, clinically-grounded data preprocessing pipeline. This approach prioritizes careful patient selection, advanced handling of missing values, and temporal alignment to create an analysis-ready dataset. This foundation enables the subse quent selection of a machine learning model using a broad set of metrics, including the utility score. 
 
 ---
 
@@ -17,16 +17,15 @@ The methodology follows a **systematic and clinically-grounded pipeline**:
    - Z-score normalization of variables.  
 
 3. **Model Development**
-   -
    - Gradient Boosting family: **LightGBM, Gradient Boosting, CatBoost, XGBoost**.  
    - Hyperparameter optimization via **Optuna**.  
    - Threshold optimization.  
 
-5. **Evaluation**  
+4. **Evaluation**  
    - Metrics: Accuracy, F1 Score, Precision, ROC-AUC, Sensitivity, Specificity, **Utiity Score**.  
    - 5-fold Stratified Group Cross-Validation.  
 
-6. **Interpretability**  
+5. **Interpretability**  
    - **SHAP values** for feature importance (global and patient-level).  
    - Visualization of key predictors (ICULOS, BUN, respiratory patterns).  
 
@@ -42,11 +41,13 @@ The methodology follows a **systematic and clinically-grounded pipeline**:
 ├── Models/
 │   └── Total_models.py
 │
-├── Optimized_Models/
-│   ├── CatBoost.py
-│   ├── Gradient_Boosting.py
-│   ├── LightGBM.py
-│   └── XGBoost.py
+└── Optimized_Models/
+    ├── CatBoost.py
+    ├── Gradient_Boosting.py
+    ├── LightGBM.py
+    └── XGBoost.py
+
+---
 
 ## Files and Directories
 
